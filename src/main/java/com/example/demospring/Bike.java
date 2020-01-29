@@ -16,12 +16,14 @@ public class Bike {
     private Brand brand;
 
     private String model;
+    private String name;
 
     public Bike() {
     }
 
-    public Bike(Brand brand, String model) {
+    public Bike(Brand brand, String model,String name) {
         this.brand = brand;
         this.model = model;
+        this.name = name;
     }
 }

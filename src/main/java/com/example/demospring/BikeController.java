@@ -12,12 +12,12 @@ public class BikeController {
 
     public BikeController(JpaBike jpaBike) {
         this.jpaBike = jpaBike;
+
     }
 
     @GetMapping("/bikes")
     public List<Bike> bikes() {
         return jpaBike.findAll();
     }
-
 
 }
