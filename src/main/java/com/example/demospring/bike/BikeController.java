@@ -1,4 +1,4 @@
-package com.example.demospring;
+package com.example.demospring.bike;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +12,12 @@ public class BikeController {
 
     public BikeController(JpaBike jpaBike) {
         this.jpaBike = jpaBike;
+
     }
 
     @GetMapping("/bikes")
     public List<Bike> bikes() {
         return jpaBike.findAll();
     }
-
 
 }

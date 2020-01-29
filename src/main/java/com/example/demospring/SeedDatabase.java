@@ -1,5 +1,9 @@
 package com.example.demospring;
 
+import com.example.demospring.bike.Bike;
+import com.example.demospring.bike.JpaBike;
+import com.example.demospring.brand.Brand;
+import com.example.demospring.brand.JpaBrand;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,17 +15,17 @@ public class SeedDatabase {
     public CommandLineRunner seed(JpaBike bikeRepo, JpaBrand brandRepo) {
         return (args) -> {
 
-            Brand honda = new Brand("Honda", 1954, CountryEnum.JAP);
-            Brand suzuki = new Brand("Suzuki", 1960, CountryEnum.JAP);
-            Brand kawasaki = new Brand("Kawasaki", 1972, CountryEnum.JAP);
+            Brand honda = new Brand("Honda", 1946, CountryEnum.JAP);
+            Brand suzuki = new Brand("Suzuki", 1909, CountryEnum.JAP);
+            Brand kawasaki = new Brand("Kawasaki", 1896, CountryEnum.JAP);
 
             brandRepo.save(honda);
             brandRepo.save(suzuki);
             brandRepo.save(kawasaki);
 
-            bikeRepo.save(new Bike(honda, "CBR1100XX"));
-            bikeRepo.save(new Bike(suzuki, "DL650"));
-            bikeRepo.save(new Bike(kawasaki, "H2R"));
+            bikeRepo.save(new Bike(honda, "CBR1100XX", "Super Blackbird"));
+            bikeRepo.save(new Bike(suzuki, "DL650", "V-Strom"));
+            bikeRepo.save(new Bike(kawasaki, "H2R", "Ninja"));
         };
     }
 }
