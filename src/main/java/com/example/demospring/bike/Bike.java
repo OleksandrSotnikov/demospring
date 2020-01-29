@@ -1,5 +1,6 @@
-package com.example.demospring;
+package com.example.demospring.bike;
 
+import com.example.demospring.brand.Brand;
 import lombok.Data;
 
 import javax.persistence.*;

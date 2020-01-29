@@ -1,13 +1,14 @@
-package com.example.demospring;
+package com.example.demospring.Exception;
 
-public class DoesNotExistException extends RuntimeException {
+public class NotFoundException extends RuntimeException {
     private final String code;
     private final String message;
 
-    public DoesNotExistException(String code, String message) {
+    public NotFoundException(String code, String message) {
         this.code = code;
         this.message = message;
     }
+
 
     public String getCode() {
         return code;
