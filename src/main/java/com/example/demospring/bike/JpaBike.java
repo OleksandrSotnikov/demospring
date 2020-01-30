@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JpaBike extends JpaRepository<Bike, Long> {
 
+    boolean existsByBrandId(Long id);
 }
