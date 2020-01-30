@@ -1,5 +1,7 @@
-package com.example.demospring.bike;
+package com.example.demospring.controllers;
 
+import com.example.demospring.jpa.Bike;
+import com.example.demospring.jpa.JpaBike;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

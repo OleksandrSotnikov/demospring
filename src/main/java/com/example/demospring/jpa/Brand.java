@@ -1,6 +1,5 @@
-package com.example.demospring.brand;
+package com.example.demospring.jpa;
 
-import com.example.demospring.CountryEnum;
 import lombok.Data;
 
 import javax.persistence.Entity;

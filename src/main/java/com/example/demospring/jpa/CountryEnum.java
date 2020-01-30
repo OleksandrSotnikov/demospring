@@ -1,4 +1,4 @@
-package com.example.demospring;
+package com.example.demospring.jpa;
 
 public enum CountryEnum {
 

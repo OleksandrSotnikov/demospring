@@ -1,7 +1,11 @@
-package com.example.demospring.brand;
+package com.example.demospring.controllers;
 
-import com.example.demospring.Exception.DoesNotExistException;
-import com.example.demospring.Exception.NotFoundException;
+import com.example.demospring.exceptions.DoesNotExistException;
+import com.example.demospring.exceptions.ImpossibleToDeleteException;
+import com.example.demospring.exceptions.NotFoundException;
+import com.example.demospring.jpa.JpaBike;
+import com.example.demospring.jpa.Brand;
+import com.example.demospring.jpa.JpaBrand;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +15,11 @@ import java.util.List;
 public class BrandController {
 
     private final JpaBrand jpaBrand;
+    private final JpaBike jpaBike;
 
-
-    public BrandController(JpaBrand jpaBrand) {
+    public BrandController(JpaBrand jpaBrand, JpaBike jpaBike) {
         this.jpaBrand = jpaBrand;
+        this.jpaBike = jpaBike;
     }
 
     @GetMapping("/brands")
@@ -44,8 +49,11 @@ public class BrandController {
     public ResponseEntity<Object> delete(@RequestBody Brand brand,
                                          @PathVariable Long id) {
         jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID'"));
-        jpaBrand.deleteById(id);
+
+        if (jpaBike.existsByBrandId(id)) {
+            throw new ImpossibleToDeleteException("Impossible to delete", "Some bikes belong to this brand");
+        }
+
         return ResponseEntity.noContent().build();
     }
-
 }
