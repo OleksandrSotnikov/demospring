@@ -1,10 +1,8 @@
-package com.example.demospring.exceptions;
+package com.example.demospring.controllers;
 
+import com.example.demospring.exceptions.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 @ControllerAdvice
 public class ExceptionAdvice {
@@ -29,7 +27,14 @@ public class ExceptionAdvice {
     @ResponseBody
     @ExceptionHandler(ImpossibleToDeleteException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public MyError ImpossibleDelete(ImpossibleToDeleteException ex) {
+    public MyError impossibleDelete(ImpossibleToDeleteException ex) {
+        return new MyError(ex.getCode(), ex.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UnprocessableEntityException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public MyError unacceptableEntity(UnprocessableEntityException ex){
         return new MyError(ex.getCode(), ex.getMessage());
     }
 
