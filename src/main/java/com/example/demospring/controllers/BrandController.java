@@ -1,10 +1,11 @@
-package com.example.demospring.brand;
+package com.example.demospring.controllers;
 
-import com.example.demospring.Exception.DoesNotExistException;
-import com.example.demospring.Exception.ImpossibleToDeleteException;
-import com.example.demospring.Exception.NotFoundException;
-import com.example.demospring.bike.JpaBike;
-import org.springframework.dao.DataIntegrityViolationException;
+import com.example.demospring.exceptions.DoesNotExistException;
+import com.example.demospring.exceptions.ImpossibleToDeleteException;
+import com.example.demospring.exceptions.NotFoundException;
+import com.example.demospring.jpa.JpaBike;
+import com.example.demospring.jpa.Brand;
+import com.example.demospring.jpa.JpaBrand;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

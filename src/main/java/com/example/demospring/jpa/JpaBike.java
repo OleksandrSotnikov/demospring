@@ -1,4 +1,4 @@
-package com.example.demospring.bike;
+package com.example.demospring.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

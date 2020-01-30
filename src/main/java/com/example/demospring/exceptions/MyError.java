@@ -1,4 +1,4 @@
-package com.example.demospring.Exception;
+package com.example.demospring.exceptions;
 
 import lombok.Data;
 

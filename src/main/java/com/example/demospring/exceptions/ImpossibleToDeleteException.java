@@ -1,10 +1,10 @@
-package com.example.demospring.Exception;
+package com.example.demospring.exceptions;
 
-public class DoesNotExistException extends RuntimeException {
+public class ImpossibleToDeleteException extends RuntimeException {
     private final String code;
     private final String message;
 
-    public DoesNotExistException(String code, String message) {
+    public ImpossibleToDeleteException(String code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -1,9 +1,6 @@
-package com.example.demospring;
+package com.example.demospring.configs;
 
-import com.example.demospring.bike.Bike;
-import com.example.demospring.bike.JpaBike;
-import com.example.demospring.brand.Brand;
-import com.example.demospring.brand.JpaBrand;
+import com.example.demospring.jpa.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
