@@ -29,7 +29,7 @@ public class BrandController {
 
     @GetMapping("/brands/{id}")
     public Brand getById(@PathVariable Long id) {
-        return jpaBrand.findById(id).orElseThrow(() -> new NotFoundException("Brand Not Found", "Bike ID Not Found"));
+        return jpaBrand.findById(id).orElseThrow(() -> new NotFoundException("Brand Not Found", "Brand ID Not Found"));
     }
 
     @PostMapping("/brands")
@@ -54,6 +54,7 @@ public class BrandController {
             throw new ImpossibleToDeleteException("Impossible to delete", "Some bikes belong to this brand");
         }
 
+        jpaBrand.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
