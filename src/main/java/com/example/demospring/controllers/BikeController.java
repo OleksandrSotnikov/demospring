@@ -50,4 +50,15 @@ public class BikeController {
 
         return jpaBike.save(bike);
     }
+
+
+    //todo Name to uppercase, edit brand name in bike
+    @PutMapping("/bikes/{id}")
+    public Bike edit(@RequestBody Bike bike,
+                     @PathVariable Long id){
+        jpaBike.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect bike's ID"));
+        bike.setId(id);
+        return jpaBike.save(bike);
+    }
+
 }
