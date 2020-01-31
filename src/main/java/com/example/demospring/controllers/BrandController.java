@@ -54,6 +54,7 @@ public class BrandController {
             throw new ImpossibleToDeleteException("Impossible to delete", "Some bikes belong to this brand");
         }
 
+        jpaBrand.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
