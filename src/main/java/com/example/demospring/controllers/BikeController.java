@@ -7,6 +7,7 @@ import com.example.demospring.jpa.Bike;
 import com.example.demospring.jpa.Brand;
 import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,10 +56,19 @@ public class BikeController {
     //todo Name to uppercase, edit brand name in bike
     @PutMapping("/bikes/{id}")
     public Bike edit(@RequestBody Bike bike,
-                     @PathVariable Long id){
+                     @PathVariable Long id) {
         jpaBike.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect bike's ID"));
         bike.setId(id);
         return jpaBike.save(bike);
     }
 
+
+    @DeleteMapping("/bikes/{id}")
+    public ResponseEntity<Object> delete(@RequestBody Bike bike,
+                                         @PathVariable Long id) {
+        jpaBike.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID'"));
+
+        jpaBike.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
