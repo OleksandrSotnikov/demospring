@@ -24,6 +24,11 @@ public class Bike {
     public Bike(Brand brand, String model,String name) {
         this.brand = brand;
         this.model = model;
-        this.name = name;
+        setName(name);
+    }
+
+    @SuppressWarnings("unused")
+    public void setName(String name) {
+        this.name = name.toUpperCase();
     }
 }
