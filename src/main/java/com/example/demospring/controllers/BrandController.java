@@ -36,15 +36,13 @@ public class BrandController {
 
     @PostMapping("/brands")
     public Brand create(@RequestBody Brand brand) {
-        return jpaBrand.save(brand);
+        return brandRepo.create(brand);
     }
 
     @PutMapping("/brands/{id}")
     public Brand edit(@RequestBody Brand brand,
                       @PathVariable Long id) {
-        jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID"));
-        brand.setId(id);
-        return jpaBrand.save(brand);
+        return brandRepo.edit(id, brand);
     }
 
     @DeleteMapping("/brands/{id}")

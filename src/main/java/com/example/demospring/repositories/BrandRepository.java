@@ -1,5 +1,6 @@
 package com.example.demospring.repositories;
 
+import com.example.demospring.exceptions.DoesNotExistException;
 import com.example.demospring.exceptions.NotFoundException;
 import com.example.demospring.jpa.Brand;
 import com.example.demospring.jpa.JpaBrand;
@@ -24,6 +25,17 @@ public class BrandRepository {
         return jpaBrand
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Brand Not Found", "Brand ID Not Found"));
+    }
+
+    public Brand create(Brand brand) {
+        return jpaBrand.save(brand);
+    }
+
+    public Brand edit(Long id, Brand brand){
+        jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID"));
+        brand.setId(id);
+        return jpaBrand.save(brand);
+
     }
 
 
