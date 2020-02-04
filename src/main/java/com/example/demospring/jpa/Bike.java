@@ -12,7 +12,7 @@ public class Bike {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Brand brand;
 
     private String model;

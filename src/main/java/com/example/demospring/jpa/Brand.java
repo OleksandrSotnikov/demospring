@@ -2,10 +2,8 @@ package com.example.demospring.jpa;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +16,9 @@ public class Brand {
     private String name;
     private Integer year;
     private CountryEnum country;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Bike> bikes;
 
     public Brand() {
     }

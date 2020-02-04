@@ -2,10 +2,10 @@ package com.example.demospring.controllers;
 
 import com.example.demospring.exceptions.DoesNotExistException;
 import com.example.demospring.exceptions.ImpossibleToDeleteException;
-import com.example.demospring.exceptions.NotFoundException;
-import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.Brand;
+import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
+import com.example.demospring.repositories.BrandRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,20 +16,22 @@ public class BrandController {
 
     private final JpaBrand jpaBrand;
     private final JpaBike jpaBike;
+    private final BrandRepository brandRepo;
 
-    public BrandController(JpaBrand jpaBrand, JpaBike jpaBike) {
+    public BrandController(JpaBrand jpaBrand, JpaBike jpaBike, BrandRepository brandRepo) {
         this.jpaBrand = jpaBrand;
         this.jpaBike = jpaBike;
+        this.brandRepo = brandRepo;
     }
 
     @GetMapping("/brands")
     public List<Brand> brands() {
-        return jpaBrand.findAll();
+        return brandRepo.findAll();
     }
 
     @GetMapping("/brands/{id}")
     public Brand getById(@PathVariable Long id) {
-        return jpaBrand.findById(id).orElseThrow(() -> new NotFoundException("Brand Not Found", "Brand ID Not Found"));
+        return brandRepo.getById(id);
     }
 
     @PostMapping("/brands")
