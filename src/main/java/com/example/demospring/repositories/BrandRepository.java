@@ -3,6 +3,7 @@ package com.example.demospring.repositories;
 import com.example.demospring.exceptions.DoesNotExistException;
 import com.example.demospring.exceptions.ImpossibleToDeleteException;
 import com.example.demospring.exceptions.NotFoundException;
+import com.example.demospring.jpa.Bike;
 import com.example.demospring.jpa.Brand;
 import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
@@ -25,10 +26,27 @@ public class BrandRepository {
         return jpaBrand.findAll();
     }
 
-    public Brand getById(Long id) {
-        return jpaBrand
+    public Brand getById(Long id, BrandQuery query) {
+        Brand brand = jpaBrand
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Brand Not Found", "Brand ID Not Found"));
+
+        if (query.isIncludeBikes()) {
+//            List<Bike> bikes = jpaBike
+//                    .findAllByBrandId(brand.getId())
+//                    .stream()
+//                    .peek(bike -> bike.setBrand(null))
+//                    .collect(Collectors.toList());
+
+            List<Bike> bikes = jpaBike.findAllByBrandId(brand.getId());
+            for (Bike bike : bikes) {
+                bike.setBrand(null);
+            }
+
+            brand.setBikes(bikes);
+        }
+
+        return brand;
     }
 
     public Brand create(Brand brand) {

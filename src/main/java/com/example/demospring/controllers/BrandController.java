@@ -1,8 +1,7 @@
 package com.example.demospring.controllers;
 
 import com.example.demospring.jpa.Brand;
-import com.example.demospring.jpa.JpaBike;
-import com.example.demospring.jpa.JpaBrand;
+import com.example.demospring.repositories.BrandQuery;
 import com.example.demospring.repositories.BrandRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +11,9 @@ import java.util.List;
 @RestController
 public class BrandController {
 
-    private final JpaBrand jpaBrand;
-    private final JpaBike jpaBike;
     private final BrandRepository brandRepo;
 
-    public BrandController(JpaBrand jpaBrand, JpaBike jpaBike, BrandRepository brandRepo) {
-        this.jpaBrand = jpaBrand;
-        this.jpaBike = jpaBike;
+    public BrandController(BrandRepository brandRepo) {
         this.brandRepo = brandRepo;
     }
 
@@ -29,7 +24,7 @@ public class BrandController {
 
     @GetMapping("/brands/{id}")
     public Brand getById(@PathVariable Long id) {
-        return brandRepo.getById(id);
+        return brandRepo.getById(id, new BrandQuery(true));
     }
 
     @PostMapping("/brands")
@@ -38,8 +33,7 @@ public class BrandController {
     }
 
     @PutMapping("/brands/{id}")
-    public Brand edit(@RequestBody Brand brand,
-                      @PathVariable Long id) {
+    public Brand edit(@PathVariable Long id, @RequestBody Brand brand) {
         return brandRepo.edit(id, brand);
     }
 

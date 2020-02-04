@@ -17,7 +17,7 @@ public class Brand {
     private Integer year;
     private CountryEnum country;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Bike> bikes;
 
     public Brand() {
