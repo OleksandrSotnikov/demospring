@@ -21,14 +21,17 @@ public class Bike {
     public Bike() {
     }
 
-    public Bike(Brand brand, String model,String name) {
+    public Bike(Brand brand, String model, String name) {
         this.brand = brand;
-        this.model = model;
+        setModel(model);
         setName(name);
     }
 
-    @SuppressWarnings("unused")
     public void setName(String name) {
         this.name = name.toUpperCase();
+    }
+
+    public void setModel(String model) {
+        this.model = model.toUpperCase();
     }
 }
