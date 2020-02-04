@@ -1,8 +1,10 @@
 package com.example.demospring.repositories;
 
 import com.example.demospring.exceptions.DoesNotExistException;
+import com.example.demospring.exceptions.ImpossibleToDeleteException;
 import com.example.demospring.exceptions.NotFoundException;
 import com.example.demospring.jpa.Brand;
+import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public class BrandRepository {
 
     private final JpaBrand jpaBrand;
+    private final JpaBike jpaBike;
 
-    public BrandRepository(JpaBrand jpaBrand) {
+    public BrandRepository(JpaBrand jpaBrand, JpaBike jpaBike) {
         this.jpaBrand = jpaBrand;
+        this.jpaBike = jpaBike;
     }
 
     public List<Brand> findAll() {
@@ -31,12 +35,19 @@ public class BrandRepository {
         return jpaBrand.save(brand);
     }
 
-    public Brand edit(Long id, Brand brand){
+    public Brand edit(Long id, Brand brand) {
         jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID"));
         brand.setId(id);
         return jpaBrand.save(brand);
-
     }
 
+    public void delete(Long id) {
+        jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID'"));
 
+        if (jpaBike.existsByBrandId(id)) {
+            throw new ImpossibleToDeleteException("Impossible to delete", "Some bikes belong to this brand");
+        }
+
+        jpaBrand.deleteById(id);
+    }
 }
