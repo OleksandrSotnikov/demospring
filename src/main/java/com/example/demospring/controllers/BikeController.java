@@ -44,5 +44,5 @@ public class BikeController {
         return ResponseEntity.noContent().build();
     }
 
-    //todo: mute null objects (JSON), Query, many parameters
+    //todo: mute null objects (JSON), Query, many parameters, color for console
 }
