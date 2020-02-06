@@ -7,12 +7,16 @@ import com.example.demospring.jpa.Bike;
 import com.example.demospring.jpa.Brand;
 import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class BikeRepository {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BikeRepository.class);
 
     private JpaBike jpaBike;
     private JpaBrand jpaBrand;
@@ -27,7 +31,13 @@ public class BikeRepository {
     }
 
     public Bike getById(Long id) {
-        return jpaBike.findById(id).orElseThrow(() -> new NotFoundException("Bike Not Found", "Bike ID Not Found"));
+        LOG.info("search a bike by id {}", id);
+        return jpaBike
+                .findById(id)
+                .orElseThrow(() -> {
+                    LOG.info("bike with id {} not found", id);
+                    return new NotFoundException("Bike Not Found", "Bike ID Not Found");
+                });
     }
 
     public Bike create(Bike bike) {
