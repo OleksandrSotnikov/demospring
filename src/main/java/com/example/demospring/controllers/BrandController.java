@@ -1,11 +1,8 @@
 package com.example.demospring.controllers;
 
-import com.example.demospring.exceptions.DoesNotExistException;
-import com.example.demospring.exceptions.ImpossibleToDeleteException;
-import com.example.demospring.exceptions.NotFoundException;
-import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.Brand;
-import com.example.demospring.jpa.JpaBrand;
+import com.example.demospring.repositories.BrandQuery;
+import com.example.demospring.repositories.BrandRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,47 +11,35 @@ import java.util.List;
 @RestController
 public class BrandController {
 
-    private final JpaBrand jpaBrand;
-    private final JpaBike jpaBike;
+    private final BrandRepository brandRepo;
 
-    public BrandController(JpaBrand jpaBrand, JpaBike jpaBike) {
-        this.jpaBrand = jpaBrand;
-        this.jpaBike = jpaBike;
+    public BrandController(BrandRepository brandRepo) {
+        this.brandRepo = brandRepo;
     }
 
     @GetMapping("/brands")
     public List<Brand> brands() {
-        return jpaBrand.findAll();
+        return brandRepo.findAll();
     }
 
     @GetMapping("/brands/{id}")
     public Brand getById(@PathVariable Long id) {
-        return jpaBrand.findById(id).orElseThrow(() -> new NotFoundException("Brand Not Found", "Brand ID Not Found"));
+        return brandRepo.getById(id, new BrandQuery(true));
     }
 
     @PostMapping("/brands")
     public Brand create(@RequestBody Brand brand) {
-        return jpaBrand.save(brand);
+        return brandRepo.create(brand);
     }
 
     @PutMapping("/brands/{id}")
-    public Brand edit(@RequestBody Brand brand,
-                      @PathVariable Long id) {
-        jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID"));
-        brand.setId(id);
-        return jpaBrand.save(brand);
+    public Brand edit(@PathVariable Long id, @RequestBody Brand brand) {
+        return brandRepo.edit(id, brand);
     }
 
     @DeleteMapping("/brands/{id}")
-    public ResponseEntity<Object> delete(@RequestBody Brand brand,
-                                         @PathVariable Long id) {
-        jpaBrand.findById(id).orElseThrow(() -> new DoesNotExistException("Bad Request", "Incorrect brand's ID'"));
-
-        if (jpaBike.existsByBrandId(id)) {
-            throw new ImpossibleToDeleteException("Impossible to delete", "Some bikes belong to this brand");
-        }
-
-        jpaBrand.deleteById(id);
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        brandRepo.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
