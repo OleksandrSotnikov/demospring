@@ -9,9 +9,13 @@ import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 public class BikeRepository {
@@ -26,8 +30,27 @@ public class BikeRepository {
         this.jpaBrand = jpaBrand;
     }
 
-    public List<Bike> findAll() {
-        return jpaBike.findAll();
+    // TODO: look into how to perform query on the database!!!
+    public List<Bike> search(BikeQuery query) {
+        Stream<Bike> stream = jpaBike.findAll().stream();
+
+        if (query.getEngineCapacityFrom() != null) {
+            stream = stream.filter(bike -> bike.getEngineCapacity() >= query.getEngineCapacityFrom());
+        }
+
+        if (query.getEngineCapacityTo() != null) {
+            stream = stream.filter(bike -> bike.getEngineCapacity() <= query.getEngineCapacityTo());
+        }
+
+        if (query.getHpFrom() != null) {
+            stream = stream.filter(bike -> bike.getHp() >= query.getHpFrom());
+        }
+
+        if (query.getHpTo() != null) {
+            stream = stream.filter(bike -> bike.getHp() <= query.getHpTo());
+        }
+
+        return stream.collect(Collectors.toList());
     }
 
     public Bike getById(Long id) {

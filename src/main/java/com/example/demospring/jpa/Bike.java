@@ -17,14 +17,18 @@ public class Bike {
 
     private String model;
     private String name;
+    private int engineCapacity;
+    private int hp;
 
     public Bike() {
     }
 
-    public Bike(Brand brand, String model, String name) {
+    public Bike(Brand brand, String model, String name, int engineCapacity, int hp) {
         this.brand = brand;
         setModel(model);
         setName(name);
+        this.engineCapacity = engineCapacity;
+        this.hp = hp;
     }
 
     public void setName(String name) {
