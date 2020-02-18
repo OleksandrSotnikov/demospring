@@ -51,4 +51,3 @@ public class BikeController {
     }
 }
 
-    //todo: mute null objects (JSON), Query
