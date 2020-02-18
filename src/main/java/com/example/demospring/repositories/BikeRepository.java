@@ -7,12 +7,18 @@ import com.example.demospring.jpa.Bike;
 import com.example.demospring.jpa.Brand;
 import com.example.demospring.jpa.JpaBike;
 import com.example.demospring.jpa.JpaBrand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 public class BikeRepository {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BikeRepository.class);
 
     private JpaBike jpaBike;
     private JpaBrand jpaBrand;
@@ -22,12 +28,37 @@ public class BikeRepository {
         this.jpaBrand = jpaBrand;
     }
 
-    public List<Bike> findAll() {
-        return jpaBike.findAll();
+    // TODO: look into how to perform query on the database!!!
+    public List<Bike> search(BikeQuery query) {
+        Stream<Bike> stream = jpaBike.findAll().stream();
+
+        if (query.getEngineCapacityFrom() != null) {
+            stream = stream.filter(bike -> bike.getEngineCapacity() >= query.getEngineCapacityFrom());
+        }
+
+        if (query.getEngineCapacityTo() != null) {
+            stream = stream.filter(bike -> bike.getEngineCapacity() <= query.getEngineCapacityTo());
+        }
+
+        if (query.getHpFrom() != null) {
+            stream = stream.filter(bike -> bike.getHp() >= query.getHpFrom());
+        }
+
+        if (query.getHpTo() != null) {
+            stream = stream.filter(bike -> bike.getHp() <= query.getHpTo());
+        }
+
+        return stream.collect(Collectors.toList());
     }
 
     public Bike getById(Long id) {
-        return jpaBike.findById(id).orElseThrow(() -> new NotFoundException("Bike Not Found", "Bike ID Not Found"));
+        LOG.info("search a bike by id {}", id);
+        return jpaBike
+                .findById(id)
+                .orElseThrow(() -> {
+                    LOG.info("bike with id {} not found", id);
+                    return new NotFoundException("Bike Not Found", "Bike ID Not Found");
+                });
     }
 
     public Bike create(Bike bike) {
