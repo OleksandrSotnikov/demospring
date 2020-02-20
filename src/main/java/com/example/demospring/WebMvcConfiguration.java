@@ -1,5 +1,6 @@
 package com.example.demospring;
 
+import com.example.demospring.interceptors.AllowOriginInterceptor;
 import com.example.demospring.interceptors.LogTimeInterceptor;
 import com.example.demospring.interceptors.RequestIdInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -15,5 +16,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogTimeInterceptor());
         registry.addInterceptor(new RequestIdInterceptor());
+        registry.addInterceptor(new AllowOriginInterceptor());
     }
 }
