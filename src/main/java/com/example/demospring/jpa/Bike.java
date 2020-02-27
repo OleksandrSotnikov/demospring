@@ -20,6 +20,8 @@ public class Bike {
     private int engineCapacity;
     private int hp;
 
+    private String wikiLink;
+
     public Bike() {
     }
 
