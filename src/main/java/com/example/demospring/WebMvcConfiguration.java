@@ -1,9 +1,9 @@
 package com.example.demospring;
 
-import com.example.demospring.interceptors.AllowOriginInterceptor;
 import com.example.demospring.interceptors.LogTimeInterceptor;
 import com.example.demospring.interceptors.RequestIdInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,6 +16,14 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogTimeInterceptor());
         registry.addInterceptor(new RequestIdInterceptor());
-        registry.addInterceptor(new AllowOriginInterceptor());
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry
+                .addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowCredentials(true);
     }
 }
